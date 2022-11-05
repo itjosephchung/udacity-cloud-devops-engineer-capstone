@@ -11,15 +11,15 @@ commands:
             unzip awscliv2.zip
             sudo ./aws/install
   install_ansible:
-      description: Install Ansible
+    description: Install Ansible
       steps:
-        - run: 
-            name: Install Ansible
-            command: |
-              sudo apt update
-              sudo apt install software-properties-common -y
-              sudo add-apt-repository --yes --update ppa:ansible/ansible
-              sudo apt install ansible -y
+      - run: 
+          name: Install Ansible
+          command: |
+            sudo apt update
+            sudo apt install software-properties-common -y
+            sudo add-apt-repository --yes --update ppa:ansible/ansible
+            sudo apt install ansible -y
   destroy-environment:
       description: app cloudformation stacks given a workflow ID.
       parameters:

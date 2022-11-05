@@ -94,11 +94,89 @@ jobs:
           key: v1-dependencies-{{ checksum "requirements.txt" }}
 
   deploy-infra:
+    docker:
+      - image: python:3.7.15
+    steps:
+      - checkout
+      - run:
+          name: Mkdocs linkcheck
+          command: |
+            if [[ mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'} -ne 0 ]]
+            then
+              exit 0
+            else
+              exit 1
+            fi  
   run-migrations:
+    docker:
+      - image: python:3.7.15
+    steps:
+      - checkout
+      - run:
+          name: Mkdocs linkcheck
+          command: |
+            if [[ mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'} -ne 0 ]]
+            then
+              exit 0
+            else
+              exit 1
+            fi  
   deploy-mkdocs:
+    docker:
+      - image: python:3.7.15
+    steps:
+      - checkout
+      - run:
+          name: Mkdocs linkcheck
+          command: |
+            if [[ mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'} -ne 0 ]]
+            then
+              exit 0
+            else
+              exit 1
+            fi  
   smoke-test:
+    docker:
+      - image: python:3.7.15
+    steps:
+      - checkout
+      - run:
+          name: Mkdocs linkcheck
+          command: |
+            if [[ mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'} -ne 0 ]]
+            then
+              exit 0
+            else
+              exit 1
+            fi  
   cloudfront-update:
+    docker:
+      - image: python:3.7.15
+    steps:
+      - checkout
+      - run:
+          name: Mkdocs linkcheck
+          command: |
+            if [[ mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'} -ne 0 ]]
+            then
+              exit 0
+            else
+              exit 1
+            fi  
   clean-up:
+    docker:
+      - image: python:3.7.15
+    steps:
+      - checkout
+      - run:
+          name: Mkdocs linkcheck
+          command: |
+            if [[ mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'} -ne 0 ]]
+            then
+              exit 0
+            else
+              exit 1
+            fi  
 
 
 workflows:

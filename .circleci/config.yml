@@ -67,10 +67,9 @@ jobs:
       - run:
           name: Ensure EKS network exists
           command: |
-            echo ${ENVIRONMENT_NAME}
             aws cloudformation deploy \
               --template-file cloudformation/network.yml \
-              --tags project=${ENVIRONMENT_NAME}-project \ 
+              --tags project=${ENVIRONMENT_NAME}-project \
               --stack-name "${ENVIRONMENT_NAME}-eks-network" \
               --region ${AWS_DEFAULT_REGION} \
               --parameter-overrides file://cloudformation/network-parameters.json

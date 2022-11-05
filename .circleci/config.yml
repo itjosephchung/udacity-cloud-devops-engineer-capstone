@@ -73,20 +73,10 @@ jobs:
     steps:
       - checkout
       - install_dep
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "requirements.txt" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
       - run:
           name: Build mkdocs static page
           command: |
             mkdocs build
-      - save_cache:
-          paths:
-            - ./venv
-          key: v1-dependencies-{{ checksum "requirements.txt" }}
 
   deploy-infra:
     executor: aws-cli/default
@@ -125,19 +115,12 @@ jobs:
       - checkout
       - aws-cli/setup:
         profile-name: capstone
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "requirements.txt" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
       - run:
           name: Deploy frontend objects
           command: |
-            cd ./venv/site
             ls
-            ls ../venv
-            aws s3 cp . s3://capstone-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+            mkdocs build
+            aws s3 cp site s3://capstone-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       - destroy-environment
       - revert-migrations     
 

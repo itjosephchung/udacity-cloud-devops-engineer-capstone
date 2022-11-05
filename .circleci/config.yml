@@ -113,6 +113,7 @@ jobs:
     executor: aws-cli/default
     steps:
       - checkout
+      - install_dep
       - aws-cli/setup:
         profile-name: capstone
       - run:
@@ -171,6 +172,7 @@ jobs:
       - image: python:3.7.15
     steps:
       - checkout
+      - install_dep
       - run:
           name: Mkdocs linkcheck
           command: |

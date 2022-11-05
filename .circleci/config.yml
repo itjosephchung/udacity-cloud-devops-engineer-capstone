@@ -13,13 +13,13 @@ commands:
   install_ansible:
     description: Install Ansible
     steps:
-    - run: 
-        name: Install Ansible
-        command: |
-          sudo apt update
-          sudo apt install software-properties-common -y
-          sudo add-apt-repository --yes --update ppa:ansible/ansible
-          sudo apt install ansible -y
+      - run: 
+          name: Install Ansible
+          command: |
+            sudo apt update
+            sudo apt install software-properties-common -y
+            sudo add-apt-repository --yes --update ppa:ansible/ansible
+            sudo apt install ansible -y
   destroy-environment:
     description: app cloudformation stacks given a workflow ID.
     parameters:
@@ -39,18 +39,15 @@ commands:
         type: string
         default: ${CIRCLE_WORKFLOW_ID:0:7}
     steps:
-    - run:
-        name: Revert migrations
-        when: on_fail 
-        command: |
-          SUCCESS=$(curl --insecure  https://kvdb.io/${KVDB_BUCKET}/migration_<< parameters.Workflow_ID >>)
-          # Logic for reverting the database state 
-          if (( $SUCCESS == 1 )); 
-          then
-            #cd ~/project/backend
-            #npm install
-            #npm run migration:revert 
-          fi
+      - run:
+          name: Revert migrations
+          when: on_fail 
+          command: |
+            SUCCESS=$(curl --insecure  https://kvdb.io/${KVDB_BUCKET}/migration_<< parameters.Workflow_ID >>)
+            # Logic for reverting the database state 
+            if (( $SUCCESS == 1 )); 
+            then
+            fi
 jobs:
   linkcheck-mkdocs:
   docker:

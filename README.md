@@ -39,6 +39,10 @@ pip install mkdocs
 * `upload_docker.sh` contains the script to upload the docker image to dockerhub
 * `Makefile` The Makefile includes instructions on environment setup and lint test
 * `make_predictions.sh` for making predictions 
+* `eks_create_cluster.sh`: creates the EKS cluster
+* `install_eksctl.sh`: installs the eksctl tool
+* `install_kubectl.sh`: installs the kubectl tool to control K8S clusters
+* `k8s_cleanup.sh`: deletes services and deployments in a K8S cluster
 
 ## Built With
 CircleCI - Cloud-based CI/CD service

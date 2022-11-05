@@ -93,6 +93,14 @@ jobs:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
 
+  deploy-infra:
+  run-migrations:
+  deploy-mkdocs:
+  smoke-test:
+  cloudfront-update:
+  clean-up:
+
+
 workflows:
   default:
     jobs:

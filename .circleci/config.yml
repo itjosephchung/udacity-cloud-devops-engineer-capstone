@@ -120,14 +120,23 @@ jobs:
             fi  
 
   deploy-mkdocs:
-    docker:
-      - image: python:3.7.15
+    executor: aws-cli/default
     steps:
       - checkout
+      - aws-cli/setup:
+        profile-name: capstone
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "requirements.txt" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
       - run:
           name: Deploy frontend objects
           command: |
-            cd /app/site
+            cd ./venv/site
+            ls
+            ls ../venv
             aws s3 cp . s3://capstone-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       - destroy-environment
       - revert-migrations     
@@ -151,10 +160,11 @@ jobs:
       - revert-migrations
 
   cloudfront-update:
-    docker:
-      - image: python:3.7.15
+    executor: aws-cli/default
     steps:
       - checkout
+      - aws-cli/setup:
+        profile-name: capstone
       - run:
           name: Save Old Workflow ID to kvdb.io
           command: |

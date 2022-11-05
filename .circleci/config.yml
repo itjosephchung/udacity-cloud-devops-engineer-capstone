@@ -54,11 +54,10 @@ jobs:
       - image: python:3.7.15
     steps:
       - checkout
-
       - run:
         name: Mkdocs linkcheck
         command: |
-          if mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'} -ne 0
+          if [[ mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'} -ne 0 ]]
           then
             exit 0
           else

@@ -35,8 +35,7 @@ pip install mkdocs
 * `Dockerfile` is the Dockerfile
 * `requirement.txt` contains the python requirement for the `app.py`
 * `mkdocs_cluster.yml` EKS cluster definition file
-
-* `Makefile` The Makefile includes instructions on environment setup and lint test* 
+* `Makefile` The Makefile includes instructions on environment setup and lint test
 * `run_docker.sh` contains the script to build and run docker locally
 * `run_kubernetes.sh` contains to orchestrate kubernetes from the docker image
 * `upload_docker.sh` contains the script to upload the docker image to dockerhub

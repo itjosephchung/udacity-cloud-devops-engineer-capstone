@@ -2,7 +2,7 @@ version: 2.1
 
 commands:
   install_dep:
-    step:
+    steps:
       - run:
           name: install dependencies
           command: |

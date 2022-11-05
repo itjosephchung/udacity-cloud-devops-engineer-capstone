@@ -102,13 +102,13 @@ jobs:
       - checkout
       - install_awscli
       - run:
-        name: Ensure infrastructure exists
-        command: |
-          aws cloudformation deploy \
-            --template-file .circleci/files/infra.yml \
-            --tags project=capstone \
-            --stack-name "capstone-${CIRCLE_WORKFLOW_ID:0:7}" \
-            --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"
+          name: Ensure infrastructure exists
+          command: |
+            aws cloudformation deploy \
+              --template-file .circleci/files/infra.yml \
+              --tags project=capstone \
+              --stack-name "capstone-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"
       - destroy-environment
 
   run-migrations:
@@ -125,6 +125,7 @@ jobs:
             else
               exit 1
             fi  
+
   deploy-mkdocs:
     docker:
       - image: python:3.7.15

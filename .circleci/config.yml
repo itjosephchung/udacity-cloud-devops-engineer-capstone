@@ -132,14 +132,11 @@ jobs:
     steps:
       - checkout
       - install_awscli
-      - restore_cache:
-        keys: v1-dependencies-{{ checksum "requirements.txt" }}
       - run:
           name: Deploy frontend objects
           command: |
             cd /app/site
-            tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
-            aws s3 cp dist s3://capstone-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+            aws s3 cp . s3://capstone-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       - destroy-environment
       - revert-migrations     
 

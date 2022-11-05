@@ -1,3 +1,5 @@
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/itjosephchung/udacity-cloud-devops-engineer-capstone/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/itjosephchung/udacity-cloud-devops-engineer-capstone/tree/main)
+
 ## Capstone Project - Cloud DevOps
 In this project, we will prove all the skills we have learned from this Cloud DevOps Engineer Udacity course.
 

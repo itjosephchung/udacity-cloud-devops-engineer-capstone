@@ -124,7 +124,6 @@ jobs:
       - image: python:3.7.15
     steps:
       - checkout
-      - install_awscli
       - run:
           name: Deploy frontend objects
           command: |
@@ -156,7 +155,6 @@ jobs:
       - image: python:3.7.15
     steps:
       - checkout
-      - install_awscli
       - run:
           name: Save Old Workflow ID to kvdb.io
           command: |

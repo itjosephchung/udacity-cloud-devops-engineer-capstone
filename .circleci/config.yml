@@ -65,10 +65,7 @@ jobs:
       - image: python:3.7.15
     steps:
       - checkout
-      - run:
-          name: Install mkdocs linkcheck
-          command: |
-            pip install mkdocs-linkcheck
+      - install_dep
       - run:
           name: Mkdocs linkcheck
           command: |

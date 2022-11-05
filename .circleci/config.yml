@@ -186,7 +186,7 @@ workflows:
       - build-mkdocs:
           requires: [linkcheck-mkdocs]
       - deploy-infra:
-          requires: [scan-mkdocs]
+          requires: [build-mkdocs]
           filters:
             branches:
               only: [main]

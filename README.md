@@ -55,6 +55,8 @@ Ansible - Configuration management tool
 Mkdocs - Open source for static site generator
 Kubernetes - Cluster container service
 Deployment - Blue/green deployment
+AWS eksctl - The official CLI for Amazon EKS
+Docker Hub - Container images repository service
 
 ## Screenshot of CircleCI CI/CD
 ![CI/CD Pipeline](circleci.png)

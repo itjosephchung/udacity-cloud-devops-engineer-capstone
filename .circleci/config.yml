@@ -57,12 +57,12 @@ jobs:
       - run:
           name: Mkdocs linkcheck
           command: |
-            if [[ mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'} -ne 0 ]]
+            if [[ `mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'}` -eq 0 ]]
             then
               exit 0
             else
               exit 1
-            fi  
+            fi   
 
   build-mkdocs:
     docker:
@@ -101,7 +101,7 @@ jobs:
       - run:
           name: Mkdocs linkcheck
           command: |
-            if [[ mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'} -ne 0 ]]
+            if [[ `mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'}` -eq 0 ]]
             then
               exit 0
             else
@@ -115,7 +115,7 @@ jobs:
       - run:
           name: Mkdocs linkcheck
           command: |
-            if [[ mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'} -ne 0 ]]
+            if [[ `mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'}` -eq 0 ]]
             then
               exit 0
             else
@@ -129,7 +129,7 @@ jobs:
       - run:
           name: Mkdocs linkcheck
           command: |
-            if [[ mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'} -ne 0 ]]
+            if [[ `mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'}` -eq 0 ]]
             then
               exit 0
             else
@@ -143,12 +143,12 @@ jobs:
       - run:
           name: Mkdocs linkcheck
           command: |
-            if [[ mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'} -ne 0 ]]
+            if [[ `mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'}` -eq 0 ]]
             then
               exit 0
             else
               exit 1
-            fi  
+            fi    
   cloudfront-update:
     docker:
       - image: python:3.7.15
@@ -157,7 +157,7 @@ jobs:
       - run:
           name: Mkdocs linkcheck
           command: |
-            if [[ mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'} -ne 0 ]]
+            if [[ `mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'}` -eq 0 ]]
             then
               exit 0
             else
@@ -171,7 +171,7 @@ jobs:
       - run:
           name: Mkdocs linkcheck
           command: |
-            if [[ mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'} -ne 0 ]]
+            if [[ `mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'}` -eq 0 ]]
             then
               exit 0
             else

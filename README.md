@@ -3,59 +3,18 @@
 ## Capstone Project - Cloud DevOps
 In this project, we will prove all the skills we have learned from this Cloud DevOps Engineer Udacity course.
 
-## Setup the Environment
+## Application
+The Application is based on a python3 script using flask to render a simple webpage in the user's browser. A requirements.txt is used to ensure that all needed dependencies come along with the Application.
 
-* Create a virtualenv with Python 3.7 and activate it. Refer to this link for help on specifying the Python version in the virtualenv.
-```bash
-python3 -m pip install --user virtualenv
-# You should have Python 3.7 available in your host.
-# Check the Python path using `which python3`
-# Use a command similar to this one:
-python3 -m virtualenv --python=`which python3` .devops
-source .devops/bin/activate
-```
-* Run `make install` to install the necessary dependencies
+## Kubernetes Cluster
+I used AWS CloudFormation to deploy the Kubernetes Cluster. The CloudFormation Deployment can be broken down into four Parts:
 
-### Installation
-To install MkDocs, run the following command from the command line:
+* Networking, to ensure new nodes can communicate with the Cluster
+* Elastic Kubernetes Service (EKS) is used to create a Kubernetes Cluster
+* NodeGroup, each NodeGroup has a set of rules to define how instances are operated and created for the EKS-Cluster
+* Management is needed to configure and manage the Cluster and its deployments and services. I created two management hosts for extra redundancy if one of them fails.
 
-```bash 
-pip install mkdocs
-```
+## Linting using Pylint and Hadolint
+Linting is used to check if the Application and Dockerfile is syntactically correct. This process makes sure that the code quality is always as good as possible.
 
-### Running `mkdocs`
-
-1. Standalone:  `mkdocs serve`
-2. Run in Docker:  `./run_docker.sh`
-3. Run in Kubernetes:  `./run_kubernetes.sh`
-
-### files in the repository
-* `.circleci` directory contain the .circleci `config.yml` file
-* `app.py` is the python file dfining the application
-* `Dockerfile` is the Dockerfile
-* `requirement.txt` contains the python requirement for the `app.py`
-* `mkdocs_cluster.yml` EKS cluster definition file
-* `Makefile` The Makefile includes instructions on environment setup and lint test
-* `run_docker.sh` contains the script to build and run docker locally
-* `run_kubernetes.sh` contains to orchestrate kubernetes from the docker image
-* `upload_docker.sh` contains the script to upload the docker image to dockerhub
-* `make_predictions.sh` for making predictions 
-* `eks_create_cluster.sh`: creates the EKS cluster
-* `install_eksctl.sh`: installs the eksctl tool
-* `install_kubectl.sh`: installs the kubectl tool to control K8S clusters
-* `k8s_cleanup.sh`: deletes services and deployments in a K8S cluster
-
-## Built With
-CircleCI - Cloud-based CI/CD service
-Amazon AWS - Cloud services
-AWS CLI - Command-line tool for AWS
-CloudFormation - Infrastructure as Code
-Ansible - Configuration management tool
-Mkdocs - Open source for static site generator
-Kubernetes - Cluster container service
-Deployment - Blue/green deployment
-AWS eksctl - The official CLI for Amazon EKS
-Docker Hub - Container images repository service
-
-## Screenshot of CircleCI CI/CD
-![CI/CD Pipeline](circleci.png)
+## Public LB DNS

@@ -1,7 +1,8 @@
 version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@3.1.3
-
+  docker: circleci/docker@1.5.0
+  
 commands:
   install_dep:
     steps:
@@ -31,22 +32,7 @@ commands:
           when: on_fail
           command: |
             aws cloudformation delete-stack --stack-name "capstone-<< parameters.Workflow_ID >>"
-  revert-migrations:
-    description: Revert the last migration
-    parameters:
-      Workflow_ID:
-        type: string
-        default: ${CIRCLE_WORKFLOW_ID:0:7}
-    steps:
-      - run:
-          name: Revert migrations
-          when: on_fail 
-          command: |
-            SUCCESS=$(curl --insecure  https://kvdb.io/${KVDB_BUCKET}/migration_<< parameters.Workflow_ID >>)
-            # Logic for reverting the database state 
-            if (( $SUCCESS == 1 )); 
-            then
-            fi
+
 jobs:
   linkcheck-mkdocs:
     docker:
@@ -59,10 +45,16 @@ jobs:
           command: |
             if [[ `mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'}` -eq 0 ]]
             then
+              echo "----------------------------Passed link check--------------------------------"
               exit 0
             else
+              echo "----------------------------Failed link check--------------------------------"
               exit 1
-            fi   
+            fi
+          name: run lint
+          command: |
+            make lint
+            echo "----------------------------Passed lint check--------------------------------"
 
   build-mkdocs:
     docker:
@@ -91,36 +83,20 @@ jobs:
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"
       - destroy-environment
 
-  run-migrations:
-    docker:
-      - image: python:3.7.15
-    steps:
-      - checkout
-      - run:
-          name: Mkdocs linkcheck
-          command: |
-            if [[ `mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'}` -eq 0 ]]
-            then
-              exit 0
-            else
-              exit 1
-            fi  
-
   deploy-mkdocs:
     executor: aws-cli/default
     steps:
       - checkout
-      - install_dep
       - aws-cli/setup:
         profile-name: capstone
+      - install_dep
       - run:
           name: Deploy frontend objects
           command: |
             ls
             mkdocs build
             aws s3 cp site s3://capstone-${CIRCLE_WORKFLOW_ID:0:7} --recursive
-      - destroy-environment
-      - revert-migrations     
+      - destroy-environment  
 
   smoke-test:
     docker:
@@ -138,7 +114,6 @@ jobs:
               exit 1
             fi
       - destroy-environment
-      - revert-migrations
 
   cloudfront-update:
     executor: aws-cli/default
@@ -162,24 +137,32 @@ jobs:
               --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
               --stack-name InitialStack      
       - destroy-environment
-      - revert-migrations
 
   clean-up:
-    docker:
-      - image: python:3.7.15
+    executor: aws-cli/default
     steps:
       - checkout
+      - aws-cli/setup:
+        profile-name: capstone
       - install_dep
       - run:
-          name: Mkdocs linkcheck
+          name: Remove old stacks and files
           command: |
-            if [[ `mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'}` -eq 0 ]]
+            export STACKS=($(aws cloudformation list-stacks \
+                --query "StackSummaries[*].StackName" \
+                --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) 
+            echo Stack names: "${STACKS[@]}"
+            export OldWorkflowID=$(curl --insecure https://kvdb.io/${KVDB_BUCKET}/old_workflow_id)
+            echo Old Workflow ID: $OldWorkflowID 
+            if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             then
-              exit 0
+              echo "----------------------------Delete Confirmed--------------------------------"
+              aws s3 rm "s3://capstone-${OldWorkflowID}" --recursive
+              aws cloudformation delete-stack --stack-name "capstone-${OldWorkflowID}"
             else
-              exit 1
-            fi  
-
+              echo "----------------------------Cannot Cleanup----------------------------------"
+            fi
+      - destroy-environment
 
 workflows:
   default:
@@ -192,15 +175,11 @@ workflows:
           filters:
             branches:
               only: [main]
-      - run-migrations:
-          requires: [deploy-infra]
       - deploy-mkdocs:
-          requires: [run-migrations]
+          requires: [deploy-infra]
       - smoke-test:
           requires: [deploy-mkdocs]
       - cloudfront-update:
           requires: [smoke-test]
       - clean-up:
           requires: [cloudfront-update]
-
-

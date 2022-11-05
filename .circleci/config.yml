@@ -55,14 +55,14 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Mkdocs linkcheck
-        command: |
-          if [[ mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'} -ne 0 ]]
-          then
-            exit 0
-          else
-            exit 1
-          fi  
+          name: Mkdocs linkcheck
+          command: |
+            if [[ mkdocs-linkcheck docs  | grep "Broken" | awk {'print $3'} -ne 0 ]]
+            then
+              exit 0
+            else
+              exit 1
+            fi  
 
   build-mkdocs:
     docker:

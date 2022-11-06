@@ -182,8 +182,8 @@ jobs:
                 echo "Our management instances are already configured."
               else
                 cat ~/inventory.txt
-                echo "Wait 60 seconds..."
-                sleep 60
+                echo "Wait 120 seconds..."
+                sleep 120
               fi
       - run:
           name: Display the LoadBalancer's DNS name
@@ -243,4 +243,3 @@ workflows:
       - deploy-docker:
           requires:
             - configure-cluster
-            

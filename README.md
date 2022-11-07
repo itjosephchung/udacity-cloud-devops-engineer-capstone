@@ -18,4 +18,4 @@ I used AWS CloudFormation to deploy the Kubernetes Cluster. The CloudFormation D
 Linting is used to check if the Application and Dockerfile is syntactically correct. This process makes sure that the code quality is always as good as possible.
 
 ## Public LB DNS
-http://a25071b279a124f17849a80650390058-818185817.us-east-1.elb.amazonaws.com/
+http://a382f7464ca584decb4388fcef02e0f2-242170676.us-east-1.elb.amazonaws.com

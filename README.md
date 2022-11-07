@@ -19,3 +19,5 @@ Linting is used to check if the Application and Dockerfile is syntactically corr
 
 ## Public LB DNS
 http://a382f7464ca584decb4388fcef02e0f2-242170676.us-east-1.elb.amazonaws.com
+
+![img](https://github.com/itjosephchung/udacity-cloud-devops-engineer-capstone/blob/bf1d5b6e54564a2758e5edbaa87000ccef9d64c8/screenshots/ELB%20access%20result.png)

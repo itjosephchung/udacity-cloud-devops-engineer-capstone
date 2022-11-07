@@ -1,3 +1,4 @@
 .vscode/
 .idea/
 hadolint
+.DS_Store

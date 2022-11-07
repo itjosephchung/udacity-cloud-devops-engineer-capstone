@@ -6,6 +6,9 @@ In this project, we will prove all the skills we have learned from this Cloud De
 ## Application
 The Application is based on a python3 script using flask to render a simple webpage in the user's browser. A requirements.txt is used to ensure that all needed dependencies come along with the Application.
 
+## CircleCI Pipeline
+![img](https://github.com/itjosephchung/udacity-cloud-devops-engineer-capstone/blob/main/screenshots/Full%20pipeline.png)
+
 ## Kubernetes Cluster
 I used AWS CloudFormation to deploy the Kubernetes Cluster. The CloudFormation Deployment can be broken down into four Parts:
 
@@ -14,8 +17,13 @@ I used AWS CloudFormation to deploy the Kubernetes Cluster. The CloudFormation D
 * NodeGroup, each NodeGroup has a set of rules to define how instances are operated and created for the EKS-Cluster
 * Management is needed to configure and manage the Cluster and its deployments and services. I created two management hosts for extra redundancy if one of them fails.
 
+![img](https://github.com/itjosephchung/udacity-cloud-devops-engineer-capstone/blob/main/screenshots/Cloudformation%20for%20the%20infrastructure.png)
+
 ## Linting using Pylint and Hadolint
 Linting is used to check if the Application and Dockerfile is syntactically correct. This process makes sure that the code quality is always as good as possible.
+
+![img](https://github.com/itjosephchung/udacity-cloud-devops-engineer-capstone/blob/main/screenshots/Linter%20test%20failure%20intentionally.png)
+![img](https://github.com/itjosephchung/udacity-cloud-devops-engineer-capstone/blob/main/screenshots/Linter%20test%20passed.png)
 
 ## Public LB DNS
 http://a382f7464ca584decb4388fcef02e0f2-242170676.us-east-1.elb.amazonaws.com
